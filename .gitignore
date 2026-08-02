@@ -24,6 +24,6 @@ target/
 # OS
 .DS_Store
 Thumbs.db
-
+#попытка спасти пул-реквест
 # Local
 *.local
