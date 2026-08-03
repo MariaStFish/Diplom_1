@@ -1,4 +1,5 @@
 package praktikum;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,40 +17,47 @@ public class BurgerSetBunsTest {
     @Mock
     private Bun mockBun;
 
+    @Mock
+    private Bun mockFirstBun;
+
+    @Mock
+    private Bun mockSecondBun;
+
     @Before
     public void setUp() {
         burger = new Burger();
     }
     @Test
-    public void setBuns_shouldSetBunCorrectly() {
+    public void setBunsShouldSetBunCorrectly() {
         String expectedName = "black bun";
         float expectedPrice = 100f;
+
         when(mockBun.getName()).thenReturn(expectedName);
         when(mockBun.getPrice()).thenReturn(expectedPrice);
 
         burger.setBuns(mockBun);
 
-        assertNotNull("Булочка должна быть добавлена", burger.bun);
-        assertEquals("Имя булочки должно совпадать", expectedName, burger.bun.getName());
-        assertEquals("Цена булочки должна совпадать", expectedPrice, burger.bun.getPrice(), 0.001f);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(burger.bun).as("Булочка должна быть добавлена").isNotNull();
+        softly.assertThat(burger.bun.getName()).as("Имя булочки должно совпадать").isEqualTo(expectedName);
+        softly.assertThat(burger.bun.getPrice()).as("Цена булочки должна совпадать").isEqualTo(expectedPrice);
+        softly.assertAll();
+
         verify(mockBun, times(1)).getName();
         verify(mockBun, times(1)).getPrice();
     }
 
     @Test
-    public void setBuns_shouldOverwritePreviousBun() {
+    public void setBunsShouldOverwritePreviousBun() {
 
-        Bun firstBun = new Bun("white bun", 200f);
-        Bun secondBun = new Bun("red bun", 300f);
+        burger.setBuns(mockFirstBun);
+        burger.setBuns(mockSecondBun);
 
-        burger.setBuns(firstBun);
-        burger.setBuns(secondBun);
-
-        assertEquals("Должна быть добавлена вторая булочка", secondBun, burger.bun);
+        assertEquals("Должна быть добавлена вторая булочка", mockSecondBun, burger.bun);
     }
 
     @Test
-    public void setBuns_shouldAcceptNullBun() {
+    public void setBunsShouldAcceptNullBun() {
 
         burger.setBuns(null);
 

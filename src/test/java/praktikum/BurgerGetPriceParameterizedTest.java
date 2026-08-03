@@ -11,15 +11,15 @@ import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
 public class BurgerGetPriceParameterizedTest {
-    private final float price1;
-    private final float price2;
-    private final float price3;
+    private final float priceFirst;
+    private final float priceSecond;
+    private final float priceThird;
     private final float expectedTotal;
 
-    public BurgerGetPriceParameterizedTest(float price1, float price2, float price3, float expectedTotal) {
-        this.price1 = price1;
-        this.price2 = price2;
-        this.price3 = price3;
+    public BurgerGetPriceParameterizedTest(float priceFirst, float priceSecond, float priceThird, float expectedTotal) {
+        this.priceFirst = priceFirst;
+        this.priceSecond = priceSecond;
+        this.priceThird = priceThird;
         this.expectedTotal = expectedTotal;
     }
 
@@ -34,24 +34,24 @@ public class BurgerGetPriceParameterizedTest {
     }
 
     @Test
-    public void getPrice_shouldCalculateCorrectPrice_withDifferentIngredients() {
+    public void getPriceShouldCalculateCorrectPriceWithDifferentIngredients() {
         Bun mockBun = mock(Bun.class);
         when(mockBun.getPrice()).thenReturn(100f);
 
         Burger testBurger = new Burger();
         testBurger.setBuns(mockBun);
 
-        Ingredient mockIng1 = mock(Ingredient.class);
-        Ingredient mockIng2 = mock(Ingredient.class);
-        Ingredient mockIng3 = mock(Ingredient.class);
+        Ingredient mockIngFirst = mock(Ingredient.class);
+        Ingredient mockIngSecond = mock(Ingredient.class);
+        Ingredient mockIngThird = mock(Ingredient.class);
 
-        when(mockIng1.getPrice()).thenReturn(price1);
-        when(mockIng2.getPrice()).thenReturn(price2);
-        when(mockIng3.getPrice()).thenReturn(price3);
+        when(mockIngFirst.getPrice()).thenReturn(priceFirst);
+        when(mockIngSecond.getPrice()).thenReturn(priceSecond);
+        when(mockIngThird.getPrice()).thenReturn(priceThird);
 
-        testBurger.addIngredient(mockIng1);
-        testBurger.addIngredient(mockIng2);
-        testBurger.addIngredient(mockIng3);
+        testBurger.addIngredient(mockIngFirst);
+        testBurger.addIngredient(mockIngSecond);
+        testBurger.addIngredient(mockIngThird);
         float result = testBurger.getPrice();
 
         assertEquals("Цена бургера должна быть " + expectedTotal, expectedTotal, result, 0.001f);

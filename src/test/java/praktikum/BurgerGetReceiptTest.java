@@ -18,13 +18,13 @@ public class BurgerGetReceiptTest {
     private Bun mockBun;
 
     @Mock
-    private Ingredient mockIngredient1;
+    private Ingredient mockIngredientFirst;
 
     @Mock
-    private Ingredient mockIngredient2;
+    private Ingredient mockIngredientSecond;
 
     @Mock
-    private Ingredient mockIngredient3;
+    private Ingredient mockIngredientThird;
 
     @Before
     public void setUp() {
@@ -32,22 +32,22 @@ public class BurgerGetReceiptTest {
     }
 
     @Test
-    public void getReceipt_shouldReturnCorrectReceipt_whenBunAndIngredientsExist() {
+    public void getReceiptShouldReturnCorrectReceiptWhenBunAndIngredientsExist() {
 
         when(mockBun.getName()).thenReturn("black bun");
         when(mockBun.getPrice()).thenReturn(100f);
 
-        when(mockIngredient1.getName()).thenReturn("hot sauce");
-        when(mockIngredient1.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient1.getPrice()).thenReturn(50f);
+        when(mockIngredientFirst.getName()).thenReturn("hot sauce");
+        when(mockIngredientFirst.getType()).thenReturn(IngredientType.SAUCE);
+        when(mockIngredientFirst.getPrice()).thenReturn(50f);
 
-        when(mockIngredient2.getName()).thenReturn("cutlet");
-        when(mockIngredient2.getType()).thenReturn(IngredientType.FILLING);
-        when(mockIngredient2.getPrice()).thenReturn(75f);
+        when(mockIngredientSecond.getName()).thenReturn("cutlet");
+        when(mockIngredientSecond.getType()).thenReturn(IngredientType.FILLING);
+        when(mockIngredientSecond.getPrice()).thenReturn(75f);
 
         burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient1);
-        burger.addIngredient(mockIngredient2);
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
 
         String receipt = burger.getReceipt().replace("\r\n", "\n");
 
@@ -61,14 +61,14 @@ public class BurgerGetReceiptTest {
         assertEquals("Чек должен соответствовать ожидаемому", expectedReceipt, receipt);
         verify(mockBun, times(2)).getName();
         verify(mockBun, times(1)).getPrice();
-        verify(mockIngredient1, times(1)).getName();
-        verify(mockIngredient1, times(1)).getType();
-        verify(mockIngredient2, times(1)).getName();
-        verify(mockIngredient2, times(1)).getType();
+        verify(mockIngredientFirst, times(1)).getName();
+        verify(mockIngredientFirst, times(1)).getType();
+        verify(mockIngredientSecond, times(1)).getName();
+        verify(mockIngredientSecond, times(1)).getType();
     }
 
     @Test
-    public void getReceipt_shouldReturnReceiptWithOnlyBun_whenNoIngredients() {
+    public void getReceiptShouldReturnReceiptWithOnlyBunWhenNoIngredients() {
 
         when(mockBun.getName()).thenReturn("white bun");
         when(mockBun.getPrice()).thenReturn(200f);
@@ -87,26 +87,26 @@ public class BurgerGetReceiptTest {
     }
 
     @Test
-    public void getReceipt_shouldReturnCorrectReceipt_withMultipleIngredients() {
+    public void getReceiptShouldReturnCorrectReceiptWithMultipleIngredients() {
         when(mockBun.getName()).thenReturn("red bun");
         when(mockBun.getPrice()).thenReturn(100f);
 
-        when(mockIngredient1.getName()).thenReturn("sauce1");
-        when(mockIngredient1.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient1.getPrice()).thenReturn(10f);
+        when(mockIngredientFirst.getName()).thenReturn("sauce1");
+        when(mockIngredientFirst.getType()).thenReturn(IngredientType.SAUCE);
+        when(mockIngredientFirst.getPrice()).thenReturn(10f);
 
-        when(mockIngredient2.getName()).thenReturn("filling1");
-        when(mockIngredient2.getType()).thenReturn(IngredientType.FILLING);
-        when(mockIngredient2.getPrice()).thenReturn(20f);
+        when(mockIngredientSecond.getName()).thenReturn("filling1");
+        when(mockIngredientSecond.getType()).thenReturn(IngredientType.FILLING);
+        when(mockIngredientSecond.getPrice()).thenReturn(20f);
 
-        when(mockIngredient3.getName()).thenReturn("sauce2");
-        when(mockIngredient3.getType()).thenReturn(IngredientType.SAUCE);
-        when(mockIngredient3.getPrice()).thenReturn(30f);
+        when(mockIngredientThird.getName()).thenReturn("sauce2");
+        when(mockIngredientThird.getType()).thenReturn(IngredientType.SAUCE);
+        when(mockIngredientThird.getPrice()).thenReturn(30f);
 
         burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient1);
-        burger.addIngredient(mockIngredient2);
-        burger.addIngredient(mockIngredient3);
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
 
 
         String receipt = burger.getReceipt().replace("\r\n", "\n");
@@ -125,7 +125,7 @@ public class BurgerGetReceiptTest {
     }
 
     @Test
-    public void getReceipt_shouldContainCorrectPrice_whenBunPriceChanges() {
+    public void getReceiptShouldContainCorrectPriceWhenBunPriceChanges() {
         when(mockBun.getName()).thenReturn("black bun");
         when(mockBun.getPrice()).thenReturn(150f);
 
@@ -138,7 +138,7 @@ public class BurgerGetReceiptTest {
         verify(mockBun, times(1)).getPrice();
     }
     @Test(expected = NullPointerException.class)
-    public void getReceipt_shouldThrowNullPointerException_whenBunNotSet() {
+    public void getReceiptShouldThrowNullPointerExceptionWhenBunNotSet() {
 
         Burger burger = new Burger();
         burger.getReceipt();

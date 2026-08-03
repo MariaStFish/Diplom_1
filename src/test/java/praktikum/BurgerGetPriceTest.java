@@ -17,13 +17,13 @@ public class BurgerGetPriceTest {
     private Bun mockBun;
 
     @Mock
-    private Ingredient mockIngredient1;
+    private Ingredient mockIngredientFirst;
 
     @Mock
-    private Ingredient mockIngredient2;
+    private Ingredient mockIngredientSecond;
 
     @Mock
-    private Ingredient mockIngredient3;
+    private Ingredient mockIngredientThird;
 
     @Before
     public void setUp() {
@@ -31,28 +31,28 @@ public class BurgerGetPriceTest {
     }
 
     @Test
-    public void getPrice_shouldReturnCorrectPrice_whenBunAndIngredientsExist() {
+    public void getPriceShouldReturnCorrectPriceWhenBunAndIngredientsExist() {
         when(mockBun.getPrice()).thenReturn(100f);
-        when(mockIngredient1.getPrice()).thenReturn(50f);
-        when(mockIngredient2.getPrice()).thenReturn(75f);
-        when(mockIngredient3.getPrice()).thenReturn(25f);
+        when(mockIngredientFirst.getPrice()).thenReturn(50f);
+        when(mockIngredientSecond.getPrice()).thenReturn(75f);
+        when(mockIngredientThird.getPrice()).thenReturn(25f);
 
         burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient1);
-        burger.addIngredient(mockIngredient2);
-        burger.addIngredient(mockIngredient3);
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
 
         float result = burger.getPrice();
 
         assertEquals("Цена бургера должна быть 350 (100*2 + 50 + 75 + 25)", 350f, result, 0.001f);
         verify(mockBun, times(1)).getPrice();
-        verify(mockIngredient1, times(1)).getPrice();
-        verify(mockIngredient2, times(1)).getPrice();
-        verify(mockIngredient3, times(1)).getPrice();
+        verify(mockIngredientFirst, times(1)).getPrice();
+        verify(mockIngredientSecond, times(1)).getPrice();
+        verify(mockIngredientThird, times(1)).getPrice();
     }
 
     @Test
-    public void getPrice_shouldReturnOnlyBunPrice_whenNoIngredients() {
+    public void getPriceShouldReturnOnlyBunPriceWhenNoIngredients() {
         when(mockBun.getPrice()).thenReturn(150f);
         burger.setBuns(mockBun);
 
@@ -60,28 +60,28 @@ public class BurgerGetPriceTest {
 
         assertEquals("Цена должна быть 300 (цена булочки * 2)", 300f, result, 0.001f);
         verify(mockBun, times(1)).getPrice();
-        verifyNoInteractions(mockIngredient1);
-        verifyNoInteractions(mockIngredient2);
-        verifyNoInteractions(mockIngredient3);
+        verifyNoInteractions(mockIngredientFirst);
+        verifyNoInteractions(mockIngredientSecond);
+        verifyNoInteractions(mockIngredientThird);
     }
 
     @Test
-    public void getPrice_shouldReturnCorrectPrice_withOneIngredient() {
+    public void getPriceShouldReturnCorrectPriceWithOneIngredient() {
         // Arrange
         when(mockBun.getPrice()).thenReturn(100f);
-        when(mockIngredient1.getPrice()).thenReturn(50f);
+        when(mockIngredientFirst.getPrice()).thenReturn(50f);
 
         burger.setBuns(mockBun);
-        burger.addIngredient(mockIngredient1);
+        burger.addIngredient(mockIngredientFirst);
 
         float result = burger.getPrice();
 
         assertEquals("Цена должна быть 250 (100*2 + 50)", 250f, result, 0.001f);
         verify(mockBun, times(1)).getPrice();
-        verify(mockIngredient1, times(1)).getPrice();
+        verify(mockIngredientFirst, times(1)).getPrice();
     }
     @Test
-    public void getPrice_shouldReturnCorrectPrice_withManyIngredients() {
+    public void getPriceShouldReturnCorrectPriceWithManyIngredients() {
         when(mockBun.getPrice()).thenReturn(100f);
 
         Ingredient[] ingredients = new Ingredient[5];
