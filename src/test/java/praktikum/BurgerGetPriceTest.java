@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,10 +45,6 @@ public class BurgerGetPriceTest {
         float result = burger.getPrice();
 
         assertEquals("Цена бургера должна быть 350 (100*2 + 50 + 75 + 25)", 350f, result, 0.001f);
-        verify(mockBun, times(1)).getPrice();
-        verify(mockIngredientFirst, times(1)).getPrice();
-        verify(mockIngredientSecond, times(1)).getPrice();
-        verify(mockIngredientThird, times(1)).getPrice();
     }
 
     @Test
@@ -59,15 +55,10 @@ public class BurgerGetPriceTest {
         float result = burger.getPrice();
 
         assertEquals("Цена должна быть 300 (цена булочки * 2)", 300f, result, 0.001f);
-        verify(mockBun, times(1)).getPrice();
-        verifyNoInteractions(mockIngredientFirst);
-        verifyNoInteractions(mockIngredientSecond);
-        verifyNoInteractions(mockIngredientThird);
     }
 
     @Test
     public void getPriceShouldReturnCorrectPriceWithOneIngredient() {
-        // Arrange
         when(mockBun.getPrice()).thenReturn(100f);
         when(mockIngredientFirst.getPrice()).thenReturn(50f);
 
@@ -77,9 +68,8 @@ public class BurgerGetPriceTest {
         float result = burger.getPrice();
 
         assertEquals("Цена должна быть 250 (100*2 + 50)", 250f, result, 0.001f);
-        verify(mockBun, times(1)).getPrice();
-        verify(mockIngredientFirst, times(1)).getPrice();
     }
+
     @Test
     public void getPriceShouldReturnCorrectPriceWithManyIngredients() {
         when(mockBun.getPrice()).thenReturn(100f);

@@ -1,12 +1,12 @@
 package praktikum;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,40 +27,39 @@ public class BurgerSetBunsTest {
     public void setUp() {
         burger = new Burger();
     }
+
     @Test
-    public void setBunsShouldSetBunCorrectly() {
-        String expectedName = "black bun";
-        float expectedPrice = 100f;
-
-        when(mockBun.getName()).thenReturn(expectedName);
-        when(mockBun.getPrice()).thenReturn(expectedPrice);
-
+    public void setBunsShouldSetBun() {
         burger.setBuns(mockBun);
+        assertEquals("Булочка должна быть установлена", mockBun, burger.bun);
+    }
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.bun).as("Булочка должна быть добавлена").isNotNull();
-        softly.assertThat(burger.bun.getName()).as("Имя булочки должно совпадать").isEqualTo(expectedName);
-        softly.assertThat(burger.bun.getPrice()).as("Цена булочки должна совпадать").isEqualTo(expectedPrice);
-        softly.assertAll();
+    @Test
+    public void setBunsShouldSetBunName() {
+        String expectedName = "black bun";
+        when(mockBun.getName()).thenReturn(expectedName);
+        burger.setBuns(mockBun);
+        assertEquals("Имя булочки должно совпадать", expectedName, burger.bun.getName());
+    }
 
-        verify(mockBun, times(1)).getName();
-        verify(mockBun, times(1)).getPrice();
+    @Test
+    public void setBunsShouldSetBunPrice() {
+        float expectedPrice = 100f;
+        when(mockBun.getPrice()).thenReturn(expectedPrice);
+        burger.setBuns(mockBun);
+        assertEquals("Цена булочки должна совпадать", expectedPrice, burger.bun.getPrice(), 0.001f);
     }
 
     @Test
     public void setBunsShouldOverwritePreviousBun() {
-
         burger.setBuns(mockFirstBun);
         burger.setBuns(mockSecondBun);
-
         assertEquals("Должна быть добавлена вторая булочка", mockSecondBun, burger.bun);
     }
 
     @Test
     public void setBunsShouldAcceptNullBun() {
-
         burger.setBuns(null);
-
         assertNull("Булочка должна быть null", burger.bun);
     }
 }

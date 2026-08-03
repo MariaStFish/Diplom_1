@@ -1,12 +1,12 @@
 package praktikum;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerMoveIngredientTest {
@@ -28,62 +28,89 @@ public class BurgerMoveIngredientTest {
     }
 
     @Test
-    public void moveIngredientShouldMoveIngredientToNewPosition() {
+    public void moveIngredientShouldMoveIngredientToNewPositionFirst() {
         burger.addIngredient(mockIngredientFirst);
         burger.addIngredient(mockIngredientSecond);
         burger.addIngredient(mockIngredientThird);
 
         burger.moveIngredient(2, 0);
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.get(0))
-                .as("Элемент с индексом 0 должен быть третьим ингредиентом")
-                .isEqualTo(mockIngredientThird);
-        softly.assertThat(burger.ingredients.get(1))
-                .as("Элемент с индексом 1 должен быть первым ингредиентом")
-                .isEqualTo(mockIngredientFirst);
-        softly.assertThat(burger.ingredients.get(2))
-                .as("Элемент с индексом 2 должен быть вторым ингредиентом")
-                .isEqualTo(mockIngredientSecond);
-        softly.assertAll();
+
+        assertEquals("Элемент с индексом 0 должен быть третьим ингредиентом", mockIngredientThird, burger.ingredients.get(0));
     }
 
     @Test
-    public void moveIngredientShouldMoveIngredientToEnd() {
+    public void moveIngredientShouldMoveIngredientToNewPositionSecond() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
 
+        burger.moveIngredient(2, 0);
+
+        assertEquals("Элемент с индексом 1 должен быть первым ингредиентом", mockIngredientFirst, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToNewPositionThird() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.moveIngredient(2, 0);
+
+        assertEquals("Элемент с индексом 2 должен быть вторым ингредиентом", mockIngredientSecond, burger.ingredients.get(2));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToEndFirst() {
         burger.addIngredient(mockIngredientFirst);
         burger.addIngredient(mockIngredientSecond);
         burger.addIngredient(mockIngredientThird);
 
         burger.moveIngredient(0, 2);
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.get(0))
-                .as("Элемент с индексом 0 должен быть вторым ингредиентом")
-                .isEqualTo(mockIngredientSecond);
-        softly.assertThat(burger.ingredients.get(1))
-                .as("Элемент с индексом 1 должен быть третьим ингредиентом")
-                .isEqualTo(mockIngredientThird);
-        softly.assertThat(burger.ingredients.get(2))
-                .as("Элемент с индексом 2 должен быть первым ингредиентом")
-                .isEqualTo(mockIngredientFirst);
-        softly.assertAll();
+        assertEquals("Элемент с индексом 0 должен быть вторым ингредиентом", mockIngredientSecond, burger.ingredients.get(0));
     }
-    @Test
-    public void moveIngredientShouldMoveIngredientToSamePosition() {
 
+    @Test
+    public void moveIngredientShouldMoveIngredientToEndSecond() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.moveIngredient(0, 2);
+
+        assertEquals("Элемент с индексом 1 должен быть третьим ингредиентом", mockIngredientThird, burger.ingredients.get(1));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToEndThird() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.moveIngredient(0, 2);
+
+        assertEquals("Элемент с индексом 2 должен быть первым ингредиентом", mockIngredientFirst, burger.ingredients.get(2));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToSamePositionFirst() {
         burger.addIngredient(mockIngredientFirst);
         burger.addIngredient(mockIngredientSecond);
 
         burger.moveIngredient(0, 0);
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.get(0))
-                .as("Первый элемент не должен измениться")
-                .isEqualTo(mockIngredientFirst);
-        softly.assertThat(burger.ingredients.get(1))
-                .as("Второй элемент не должен измениться")
-                .isEqualTo(mockIngredientSecond);
-        softly.assertAll();
+        assertEquals("Первый элемент не должен измениться", mockIngredientFirst, burger.ingredients.get(0));
+    }
+
+    @Test
+    public void moveIngredientShouldMoveIngredientToSamePositionSecond() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+
+        burger.moveIngredient(0, 0);
+
+        assertEquals("Второй элемент не должен измениться", mockIngredientSecond, burger.ingredients.get(1));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -109,3 +136,4 @@ public class BurgerMoveIngredientTest {
         burger.moveIngredient(0, -1);
     }
 }
+

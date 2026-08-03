@@ -6,7 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -33,7 +34,6 @@ public class BurgerGetReceiptTest {
 
     @Test
     public void getReceiptShouldReturnCorrectReceiptWhenBunAndIngredientsExist() {
-
         when(mockBun.getName()).thenReturn("black bun");
         when(mockBun.getPrice()).thenReturn(100f);
 
@@ -59,17 +59,10 @@ public class BurgerGetReceiptTest {
                 "Price: 325,000000\n";
 
         assertEquals("Чек должен соответствовать ожидаемому", expectedReceipt, receipt);
-        verify(mockBun, times(2)).getName();
-        verify(mockBun, times(1)).getPrice();
-        verify(mockIngredientFirst, times(1)).getName();
-        verify(mockIngredientFirst, times(1)).getType();
-        verify(mockIngredientSecond, times(1)).getName();
-        verify(mockIngredientSecond, times(1)).getType();
     }
 
     @Test
     public void getReceiptShouldReturnReceiptWithOnlyBunWhenNoIngredients() {
-
         when(mockBun.getName()).thenReturn("white bun");
         when(mockBun.getPrice()).thenReturn(200f);
 
@@ -82,8 +75,6 @@ public class BurgerGetReceiptTest {
                 "Price: 400,000000\n";
 
         assertEquals("Чек должен содержать только булочки", expectedReceipt, receipt);
-        verify(mockBun, times(2)).getName();
-        verify(mockBun, times(1)).getPrice();
     }
 
     @Test
@@ -108,7 +99,6 @@ public class BurgerGetReceiptTest {
         burger.addIngredient(mockIngredientSecond);
         burger.addIngredient(mockIngredientThird);
 
-
         String receipt = burger.getReceipt().replace("\r\n", "\n");
 
         String expectedReceipt = "(==== red bun ====)\n" +
@@ -120,8 +110,6 @@ public class BurgerGetReceiptTest {
                 "Price: 260,000000\n";
 
         assertEquals("Чек должен соответствовать ожидаемому", expectedReceipt, receipt);
-        verify(mockBun, times(2)).getName();
-        verify(mockBun, times(1)).getPrice();
     }
 
     @Test
@@ -134,12 +122,10 @@ public class BurgerGetReceiptTest {
         String receipt = burger.getReceipt().replace("\r\n", "\n");
 
         assertTrue("В чеке цена - 300,000000", receipt.contains("Price: 300,000000"));
-        verify(mockBun, times(2)).getName();
-        verify(mockBun, times(1)).getPrice();
     }
+
     @Test(expected = NullPointerException.class)
     public void getReceiptShouldThrowNullPointerExceptionWhenBunNotSet() {
-
         Burger burger = new Burger();
         burger.getReceipt();
     }

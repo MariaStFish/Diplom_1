@@ -1,12 +1,13 @@
 package praktikum;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerRemoveIngredientTest {
@@ -28,30 +29,60 @@ public class BurgerRemoveIngredientTest {
     }
 
     @Test
-    public void removeIngredientShouldRemoveIngredientAtIndex() {
+    public void removeIngredientShouldReduceListSize() {
         burger.addIngredient(mockIngredientFirst);
         burger.addIngredient(mockIngredientSecond);
         burger.addIngredient(mockIngredientThird);
 
         int initialSize = burger.ingredients.size();
+
         burger.removeIngredient(1);
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.size())
-                .as("Размер списка должен уменьшиться на 1")
-                .isEqualTo(initialSize - 1);
-        softly.assertThat(burger.ingredients.contains(mockIngredientSecond))
-                .as("Список не должен содержать удалённый ингредиент")
-                .isFalse();
-        softly.assertThat(burger.ingredients.contains(mockIngredientFirst))
-                .as("Первый ингредиент должен остаться")
-                .isTrue();
-        softly.assertThat(burger.ingredients.contains(mockIngredientThird))
-                .as("Третий ингредиент должен остаться")
-                .isTrue();
-        softly.assertAll();
+        assertEquals("Размер списка должен уменьшиться на 1", initialSize - 1, burger.ingredients.size());
     }
 
+    @Test
+    public void removeIngredientShouldNotContainRemovedIngredient() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.removeIngredient(1);
+
+        assertFalse("Список не должен содержать удалённый ингредиент", burger.ingredients.contains(mockIngredientSecond));
+    }
+
+    @Test
+    public void removeIngredientShouldContainFirstIngredient() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.removeIngredient(1);
+
+        assertTrue("Первый ингредиент должен остаться", burger.ingredients.contains(mockIngredientFirst));
+    }
+
+    @Test
+    public void removeIngredientShouldContainThirdIngredient() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+        burger.addIngredient(mockIngredientThird);
+
+        burger.removeIngredient(1);
+
+        assertTrue("Третий ингредиент должен остаться", burger.ingredients.contains(mockIngredientThird));
+    }
+
+    @Test
+    public void removeIngredientShouldRemoveFirstIngredientSize() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+
+        burger.removeIngredient(0);
+
+        assertEquals("Размер списка должен быть 1", 1, burger.ingredients.size());
+    }
 
     @Test
     public void removeIngredientShouldRemoveFirstIngredient() {
@@ -60,17 +91,27 @@ public class BurgerRemoveIngredientTest {
 
         burger.removeIngredient(0);
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.size())
-                .as("Размер списка должен быть 1")
-                .isEqualTo(1);
-        softly.assertThat(burger.ingredients.contains(mockIngredientFirst))
-                .as("Первый ингредиент должен быть удалён")
-                .isFalse();
-        softly.assertThat(burger.ingredients.contains(mockIngredientSecond))
-                .as("Второй ингредиент должен остаться")
-                .isTrue();
-        softly.assertAll();
+        assertFalse("Первый ингредиент должен быть удалён", burger.ingredients.contains(mockIngredientFirst));
+    }
+
+    @Test
+    public void removeIngredientShouldContainSecondIngredient() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+
+        burger.removeIngredient(0);
+
+        assertTrue("Второй ингредиент должен остаться", burger.ingredients.contains(mockIngredientSecond));
+    }
+
+    @Test
+    public void removeIngredientShouldRemoveLastIngredientSize() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+
+        burger.removeIngredient(1);
+
+        assertEquals("Размер списка должен быть 1", 1, burger.ingredients.size());
     }
 
     @Test
@@ -80,17 +121,17 @@ public class BurgerRemoveIngredientTest {
 
         burger.removeIngredient(1);
 
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(burger.ingredients.size())
-                .as("Размер списка должен быть 1")
-                .isEqualTo(1);
-        softly.assertThat(burger.ingredients.contains(mockIngredientFirst))
-                .as("Первый ингредиент должен остаться")
-                .isTrue();
-        softly.assertThat(burger.ingredients.contains(mockIngredientSecond))
-                .as("Второй ингредиент должен быть удалён")
-                .isFalse();
-        softly.assertAll();
+        assertFalse("Второй ингредиент должен быть удалён", burger.ingredients.contains(mockIngredientSecond));
+    }
+
+    @Test
+    public void removeIngredientShouldContainFirstIngredientAfterRemoval() {
+        burger.addIngredient(mockIngredientFirst);
+        burger.addIngredient(mockIngredientSecond);
+
+        burger.removeIngredient(1);
+
+        assertTrue("Первый ингредиент должен остаться", burger.ingredients.contains(mockIngredientFirst));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
