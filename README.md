@@ -20,35 +20,6 @@
 
 ---
 
-## 📁 Структура проекта
-Diplom_1/
-├── src/
-│ ├── main/
-│ │ └── java/
-│ │ └── praktikum/
-│ │ ├── Bun.java
-│ │ ├── Burger.java
-│ │ ├── Database.java
-│ │ ├── Ingredient.java
-│ │ ├── IngredientType.java
-│ │ └── Praktikum.java
-│ └── test/
-│ └── java/
-│ └── praktikum/
-│ ├── BurgerAddIngredientTest.java
-│ ├── BurgerGetPriceTest.java
-│ ├── BurgerGetPriceParameterizedTest.java
-│ ├── BurgerGetReceiptTest.java
-│ ├── BurgerMoveIngredientTest.java
-│ ├── BurgerRemoveIngredientTest.java
-│ └── BurgerSetBunsTest.java
-├── pom.xml
-└── README.md
-
-text
-
----
-
 ## 🧪 Что покрыто тестами
 
 ### `BurgerSetBunsTest`
