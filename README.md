@@ -69,5 +69,4 @@
 
 ## 🚀 Как запустить
 
-bash
 mvn clean test
